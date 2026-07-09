@@ -1,0 +1,25 @@
+name: Sync Laravel docs
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Run docs sync
+        env:
+          PUSH_CHANGES: true
+        run: |
+          ./sync-worktree.sh
